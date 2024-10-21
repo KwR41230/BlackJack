@@ -71,7 +71,7 @@ while True:
                                ''')
     bet = get_bet(wallet)
     if bet == 'q':
-        print("Thanks for playing!")
+        print("\nThanks for playing!\n")
         break
     
     wallet -= bet
@@ -153,10 +153,21 @@ while True:
 
     print(f"Your current wallet: ${wallet}\n")
     if wallet <= 0:
-        print("You've run out of money. Game over!")
+        print()
+        print(r'''
+                  You've run out of money! 
+         ____ ____ _  _ ____    ____ _  _ ____ ____         
+__ __ __ | __ |__| |\/| |___    |  | |  | |___ |__/ __ __ __
+         |__] |  | |  | |___    |__|  \/  |___ |  \                       
+              
+         ''')
+        print()
         break
 
 print(f"Final wallet balance: ${wallet}")
+print()
+print()
+
 
 
 
