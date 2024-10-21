@@ -41,7 +41,7 @@ def display_hand(hand, hide_first=False):
         return f"[Hidden], {', '.join(str(card[0]) for card in hand[1:])}"
     return ', '.join(str(card[0]) for card in hand)
 
-# New function to get a valid bet
+# Function to get a valid bet
 def get_bet(wallet):
     while True:
         bet = input(f"Your wallet: ${wallet}. Enter your bet (or q to quit): $")
@@ -60,14 +60,20 @@ wallet = 1000
 
 # Main game loop
 while True:
+    print(r'''
+        _ _ _ ____ _    ____ ____ _  _ ____    ___ ____
+        | | | |___ |    |    |  | |\/| |___     |  |  |
+        |_|_| |___ |___ |___ |__| |  | |___     |  |__|
+    ''')
     print(r''' 
     
-        ,-,---. .              ,-_/                    
-         '|___/ |  ,-. ,-. . , '  | ,-. ,-. . ,        
--- -- -- ,|   \ |  ,-| |   |/     | ,-| |   |/ -- -- --
-        `-^---' `' `-^ `-' |\     | `-^ `-' |\         
-                           ' ` /  |         ' `        
-                               `--'                                      
+         ,-,---. .              ,-_/                    
+          '|___/ |  ,-. ,-. . , '  | ,-. ,-. . ,        
+ -- -- -- ,|   \ |  ,-| |   |/     | ,-| |   |/ -- -- --
+         `-^---' `' `-^ `-' |\     | `-^ `-' |\         
+                            ' ` /  |         ' `        
+                                `--'                    
+                                 
                                ''')
     bet = get_bet(wallet)
     if bet == 'q':
@@ -92,7 +98,9 @@ while True:
         print(f"Dealer's hand: {display_hand(dealer_hand, hide_first=True)}\n")
         
         player_total = calculate_hand(player_hand)
-        if player_total == 21:
+        if player_total == 21 and len(player_hand) == 2:  # Check for a natural blackjack
+            blackjack_payout = bet * 1.5  # Calculate 3:2 payout
+            wallet += bet + blackjack_payout  # Return original bet plus 3:2 payout
             print(r''' 
     
         ,-,---. .              ,-_/                    
@@ -109,10 +117,14 @@ while True:
          `--'                                                                            
                                
                                ''')
-            wallet += bet * 2
+            
+            print(f"Blackjack! You win ${blackjack_payout:.2f}")
+            print()
+
             break
         elif player_total > 21:
             print("Bust! You lose.")
+            print()
             break
         
         action = input("Do you want to hit or stand?\n \nIf you want to hit, Enter 1: \nIf you want to stand, Enter 2: \n").lower()
@@ -130,9 +142,11 @@ while True:
             
             if dealer_total > 21:
                 print("Dealer busts! You win!")
+                print()
                 wallet += bet * 2
             elif dealer_total > player_total:
                 print("Dealer wins!")
+                print()
             elif dealer_total < player_total:
                 print(r'''
 
