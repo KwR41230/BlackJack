@@ -1,6 +1,8 @@
 import random
-from colorama import init, Fore, Back, Style
+from colorama import init, Fore, Style
 import time
+import os
+
 
 init()
 
@@ -147,6 +149,7 @@ def main_loop():
                 display_statistics(stats)
                 print("\nThanks for playing!\n")
                 time.sleep(60)
+                exit()
             
             stats['games_played'] += 1
             initial_hand_wallet = wallet
@@ -350,11 +353,13 @@ def main_loop():
     print()        
     print("Thanks for playing!")
     print()
-    time.sleep(60)
+    time.sleep(10)
+    input('Press ENTER to EXIT!')
+    exit()
 
 init()
 main_loop()
-
+#input('Press ENTER to play!')
 
 
 
