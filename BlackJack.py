@@ -1,5 +1,6 @@
 import random
 from colorama import init, Fore, Back, Style
+import time
 
 init()
 
@@ -81,11 +82,14 @@ def display_statistics(stats):
     print(f"Busts: {stats['busts']}")
     
     # Color-coded total profit
-    if stats['total_profit'] < 0:
+    if stats['total_profit'] <= -3000:
+        profit_color = Fore.RED + Style.BRIGHT
+        print(Fore.RED + Style.BRIGHT + "YOU ARE BROKE!!" + Style.RESET_ALL)  
+    elif stats['total_profit'] < 0:
         profit_color = Fore.RED
     elif stats['total_profit'] > 0:
         profit_color = Fore.GREEN
-    else:
+    else: 
         profit_color = Fore.CYAN
     print(f"Total Profit: {profit_color}${stats['total_profit']:.2f}{Fore.CYAN}")
     
@@ -142,7 +146,7 @@ def main_loop():
             if bet == 'q':
                 display_statistics(stats)
                 print("\nThanks for playing!\n")
-                return
+                time.sleep(60)
             
             stats['games_played'] += 1
             initial_hand_wallet = wallet
@@ -308,7 +312,7 @@ def main_loop():
 
             print("Your current wallet:" , end=' ')
             print(Fore.GREEN + Style.BRIGHT + f'${wallet}\n' + Style.RESET_ALL)
-            if wallet <= 0:
+            if wallet <= 0 or (stats['total_profit'] <= (-3000)):
                 print()
                 print(Fore.RED + Style.BRIGHT + r'''
                         You've run out of money! 
@@ -331,12 +335,22 @@ def main_loop():
         
         # Display statistics
         display_statistics(stats)
+        if stats['total_profit'] <= -3000:
+            print(Fore.RED + Style.BRIGHT + r'''
+                        You've run out of money! 
+                 ____ ____ _  _ ____    ____ _  _ ____ ____         
+        __ __ __ | __ |__| |\/| |___    |  | |  | |___ |__/ __ __ __
+                 |__] |  | |  | |___    |__|  \/  |___ |  \                       
+                    
+''' + Style.RESET_ALL)
+            break
         
         if not replay_game():
             break
     print()        
     print("Thanks for playing!")
     print()
+    time.sleep(60)
 
 init()
 main_loop()
