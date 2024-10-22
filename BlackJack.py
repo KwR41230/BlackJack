@@ -31,7 +31,7 @@ random.shuffle(deck)
 # Function to give the option to re-play the game
 def replay_game():
     while True:
-        game_option = input("Would you like to replay the game? (y/n): ").lower()
+        game_option = input(f"{Fore.WHITE}\nWould you like to borrow another {Fore.GREEN}$1000{Fore.WHITE} from the bank? (y/n): {Style.RESET_ALL}").lower()
         if game_option == 'y':
             return True
         elif game_option == 'n':
@@ -123,7 +123,7 @@ def main_loop():
         initial_wallet = wallet
         
         while True:
-            print(Fore.BLUE + r'''
+            print(Fore.BLUE + Style.BRIGHT + r'''
             _ _ _ ____ _    ____ ____ _  _ ____    ___ ____
             | | | |___ |    |    |  | |\/| |___     |  |  |
             |_|_| |___ |___ |___ |__| |  | |___     |  |__|
@@ -235,7 +235,7 @@ def main_loop():
                         stats['total_profit'] -= loss
                         stats['biggest_loss'] = max(stats['biggest_loss'], loss)
                     elif dealer_total < player_total:
-                        print(Fore.GREEN + r'''
+                        print(Fore.GREEN + Style.BRIGHT + r'''
              .  .          ,.   ,   ,.             
              |  | ,-. . .  `|  /|  / . ,-.         
     -- -- -- |  | | | | |   | / | /  | | | -- -- --
@@ -325,9 +325,9 @@ def main_loop():
         print()
         
         # Update win rate with debug information
-        print(f"Debug: Games won: {stats['games_won']}, Games played: {stats['games_played']}")
-        stats['win_rate'] = (stats['games_won'] / stats['games_played'] * 100) if stats['games_played'] > 0 else 0.0
-        print(f"Debug: Calculated win rate: {stats['win_rate']:.2f}%")
+        # print(f"Debug: Games won: {stats['games_won']}, Games played: {stats['games_played']}")
+        # stats['win_rate'] = (stats['games_won'] / stats['games_played'] * 100) if stats['games_played'] > 0 else 0.0
+        # print(f"Debug: Calculated win rate: {stats['win_rate']:.2f}%")
         
         # Display statistics
         display_statistics(stats)
@@ -340,6 +340,7 @@ def main_loop():
 
 init()
 main_loop()
+
 
 
 
